@@ -14,6 +14,8 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 library(ggcorrplot)
+library(caret)
+library(plotly)
 
 set.seed(22)
 df <- read.csv("sledzie.csv", sep=",")
@@ -130,7 +132,8 @@ ggplot(df, aes(x=nao)) + geom_histogram(binwidth = .5)
 ## Potwierdzenie zjawiska stopniowego karłowacenia śledzi oceanicznych wyławianych w Europie
 Z racji tego że w zestawie danych brakuje jednoznacznych znaczników czasowych, wykorzystałem liczbę porządkową w kolumne X, aby zachować chronologię badań.
 ```{r, echo=FALSE}
-ggplot(df, aes(x=X, y=length)) + geom_line()
+length_plot <- ggplot(df, aes(x=X, y=length)) + geom_line()
+ggplotly(length_plot)
 ```
 
 ## Wykres korelacji zmiennych
@@ -141,3 +144,45 @@ ggcorrplot(df_correlation, type="lower")
 ```
 
 Na powyższym wykresie korelacji należy zwrócić uwagę na korelacje z długością śledzi. Najwyższa korelacja zauważalna jest z wartościami zagęszczenie Calanus helgolandicus gat. 1 (chel1), zagęszczenie widłonogów gat. 1 (lcop1), ułamek pozostawionego narybku (fbar), natomiast długość śledzia jest najmniej skorelowana z temperaturą przy powierzchni wody (sst) oraz oscylacją północnoatlantycką (nao).
+
+# Predykcja
+```{r, echo=FALSE}
+inTraining <- createDataPartition(y=df$length, p=.7, list=FALSE)
+training <- df[inTraining,]
+testing <- df[-inTraining,]
+ctrl <- trainControl(method="repeatedcv", number=2, repeats=5)
+```
+
+## Linear Regression
+```{r, echo=FALSE}
+lr <- train(length ~ ., data=training, method='lm', trControl=ctrl)
+lr
+```
+
+## Random Forest
+```{r, echo=FALSE}
+rf <- train(length ~ ., data=training, method='rf', trControl=ctrl, tundeGrid=data.frame(mtry=8), importance=TRUE, ntree=15)
+rf
+```
+
+## k-NN
+```{r, echo=FALSE}
+knn <- train(length ~ ., data=training, method='knn', trControl=ctrl)
+knn
+```
+
+## Porównanie modeli
+```{r, echo=FALSE}
+temp <- list(LR=lr, RF=rf, KNN=knn)
+resamples_results <- resamples(temp)
+summary(resamples_results)
+```
+
+## Atrybuty wpływające na wynik
+W celu przedstawienia atrybutów, które, na podstawie dostępnych danych, są przyczyną karłowacenia śledzi wykorzystany zostanie model RandomForest. Dane zostały wyczyszczony i uruchomione na modelu RandomForest.
+
+```{r, echo=FALSE}
+plot(varImp(rf))
+```
+
+Na podstawie powyższego wykresu można stwierdzić, że największy wpływ ma temperatura wody oraz zagęszczenie widłogonów gat. 1. Atrybuty takie jak miesiąc oraz X, czlyi numer porządkowy, zostały pominięte celowo, ponieważ nie mają znaczenia dla naszej analizy danych.
