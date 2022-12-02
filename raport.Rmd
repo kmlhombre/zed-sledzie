@@ -13,6 +13,7 @@ library(knitr)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
+library(ggcorrplot)
 
 set.seed(22)
 df <- read.csv("sledzie.csv", sep=",")
@@ -133,6 +134,10 @@ ggplot(df, aes(x=X, y=length)) + geom_line()
 ```
 
 ## Wykres korelacji zmiennych
+W celu ułatwienia odczytywania danych, ukryłem powtarzające się macierze.
 ```{r, echo=FALSE}
-
+df_correlation <- cor(df)
+ggcorrplot(df_correlation, type="lower")
 ```
+
+Na powyższym wykresie korelacji należy zwrócić uwagę na korelacje z długością śledzi. Najwyższa korelacja zauważalna jest z wartościami zagęszczenie Calanus helgolandicus gat. 1 (chel1), zagęszczenie widłonogów gat. 1 (lcop1), ułamek pozostawionego narybku (fbar), natomiast długość śledzia jest najmniej skorelowana z temperaturą przy powierzchni wody (sst) oraz oscylacją północnoatlantycką (nao).
