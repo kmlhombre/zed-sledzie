@@ -186,3 +186,6 @@ plot(varImp(rf))
 ```
 
 Na podstawie powyższego wykresu można stwierdzić, że największy wpływ ma temperatura wody oraz zagęszczenie widłogonów gat. 1. Atrybuty takie jak miesiąc oraz X, czlyi numer porządkowy, zostały pominięte celowo, ponieważ nie mają znaczenia dla naszej analizy danych.
+
+# Podsumowanie
+Wykonane badania dowiodły że za procesem karłowacenia śledzi oceanicznych wyławianych w Europie w ostatnich 60 latach, odpowiadają wzrost temperatury wody oraz dostępność niektórych planktonów, w głównej mierze zagęszczenie widłogonów gat. 1.
