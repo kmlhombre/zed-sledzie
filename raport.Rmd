@@ -143,7 +143,7 @@ df_correlation <- cor(df)
 ggcorrplot(df_correlation, type="lower")
 ```
 
-Na powyższym wykresie korelacji należy zwrócić uwagę na korelacje z długością śledzi. Najwyższa korelacja zauważalna jest z wartościami zagęszczenie Calanus helgolandicus gat. 1 (chel1), zagęszczenie widłonogów gat. 1 (lcop1), ułamek pozostawionego narybku (fbar), natomiast długość śledzia jest najmniej skorelowana z temperaturą przy powierzchni wody (sst) oraz oscylacją północnoatlantycką (nao).
+Na powyższym wykresie korelacji należy zwrócić uwagę na atrybuty korelujące z długością śledzi. Dodatnia korelacja zauważalna jest z wartościami zagęszczenia Calanus helgolandicus gat. 1 (chel1), zagęszczenia widłonogów gat. 1 (lcop1) i ułamku pozostawionego narybku (fbar). Natomiast długość śledzia jest ujemnie, bardzo silnie skorelowana z temperaturą przy powierzchni wody (sst) oraz, w mniejszym stopniu, z oscylacją północnoatlantycką (nao).
 
 # Predykcja
 ```{r, echo=FALSE}
@@ -179,13 +179,13 @@ summary(resamples_results)
 ```
 
 ## Atrybuty wpływające na wynik
-W celu przedstawienia atrybutów, które, na podstawie dostępnych danych, są przyczyną karłowacenia śledzi wykorzystany zostanie model RandomForest. Dane zostały wyczyszczony i uruchomione na modelu RandomForest.
+W celu przedstawienia atrybutów, które, na podstawie dostępnych danych, są przyczyną karłowacenia śledzi wykorzystany zostanie model RandomForest. Dane zostały wcześniej wyczyszczone.
 
 ```{r, echo=FALSE}
 plot(varImp(rf))
 ```
 
-Na podstawie powyższego wykresu można stwierdzić, że największy wpływ ma temperatura wody oraz zagęszczenie widłogonów gat. 1. Atrybuty takie jak miesiąc oraz X, czlyi numer porządkowy, zostały pominięte celowo, ponieważ nie mają znaczenia dla naszej analizy danych.
+Na podstawie powyższego wykresu można stwierdzić, że największy wpływ na długość śledzi ma temperatura wody oraz zagęszczenie widłogonów gat. 1. Atrybuty takie jak miesiąc oraz X, czyli numer porządkowy, zostały pominięte celowo, ponieważ nie mają znaczenia dla naszej analizy danych.
 
 # Podsumowanie
 Wykonane badania dowiodły że za procesem karłowacenia śledzi oceanicznych wyławianych w Europie w ostatnich 60 latach, odpowiadają wzrost temperatury wody oraz dostępność niektórych planktonów, w głównej mierze zagęszczenie widłogonów gat. 1.
