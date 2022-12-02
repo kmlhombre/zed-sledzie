@@ -2,7 +2,31 @@
 title: "ZED - śledzie oceaniczne"
 author: "Kamil Osak"
 date: "2022-12-02"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
 
+set.seed(22)
+df <- read.csv("sledzie.csv", sep=",")
+for(i in 1:ncol(df)) {df[,i] <- as.numeric(df[,i])}
+df <- drop_na(df)
+```
+
+# Cel projektu
+Celem projektu jest analiza połowów śledzi oceanicznych wyławianych w Europie.
+
+# Wykorzystane pakiety
+Do wykonania analizy danych zostały wykorzystane następujące pakiety:
+
+```{r, echo=FALSE, warning=FALSE}
+packages <- names(sessionInfo()$other)
+knitr::kable(packages, col.names=NULL)
+```
