@@ -30,3 +30,109 @@ Do wykonania analizy danych zostały wykorzystane następujące pakiety:
 packages <- names(sessionInfo()$other)
 knitr::kable(packages, col.names=NULL)
 ```
+
+# Informacje dotyczące zbioru danych
+## Podstawowe informacje
+Zbiór danych został wczytany i oczyszczony z brakujących danych. Rekordy, które nie miały wartości zostały usunięte z zestawu danych. 
+
+```{r, echo=FALSE}
+print(paste("Liczba wierszy: ", nrow(df)))
+print(paste("Liczba kolumn: ", ncol(df)))
+```
+
+### Próbka z zestawu danych
+```{r, echo=FALSE}
+knitr::kable(head(df))
+```
+
+### Podsumowanie zestawu danych
+```{r, echo=FALSE}
+knitr::kable(summary(df))
+```
+
+### Długość złowionego śledzia [cm]
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=length)) + geom_histogram(binwidth = .5)
+```
+
+### Zagęszczenie Calanus finmarchicus gat. 1 - cfin1
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=cfin1)) + geom_histogram(binwidth = .5)
+```
+
+### Zagęszczenie Calanus finmarchicus gat. 2 - cfin2
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=cfin2)) + geom_histogram(binwidth = .5)
+```
+
+### Zagęszczenie Calanus helgolandicus gat. 1 - chel1
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=chel1)) + geom_histogram(binwidth = .5)
+```
+
+### Zagęszczenie Calanus helgolandicus gat. 2 - chel2
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=chel2)) + geom_histogram(binwidth = .5)
+```
+
+### Zagęszczenie widłonogów gat. 1 - lcop1
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=lcop1)) + geom_histogram(binwidth = .5)
+```
+
+### Zagęszczenie widłonogów gat. 2 - lcop2
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=lcop2)) + geom_histogram(binwidth = .5)
+```
+
+### Natężenie połowów w regionie - fbar
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=fbar)) + geom_histogram(binwidth = .5)
+```
+
+### Roczny narybek [liczba śledzi] - recr
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=recr)) + geom_histogram(bins = 30)
+```
+
+### Łączne roczne natężenie połowów w regionie - cumf
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=cumf)) + geom_histogram(binwidth = .5)
+```
+
+### Łączna liczba ryb złowionych w ramach połowu - totaln
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=totaln)) + geom_histogram(bins = 30)
+```
+
+### Temperatura przy powierzchni wody [°C] - sst
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=sst)) + geom_histogram(binwidth = .5)
+```
+
+### Poziom zasolenia wody [Knudsen ppt] - sal
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=sal)) + geom_histogram(binwidth = .5)
+```
+
+### Miesiąc połowu - xmonth
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=xmonth)) + geom_histogram(binwidth = .5)
+```
+
+### Oscylacja północnoatantycka [mb] - nao
+```{r, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x=nao)) + geom_histogram(binwidth = .5)
+```
+
+# Analiza danych
+## Potwierdzenie zjawiska stopniowego karłowacenia śledzi oceanicznych wyławianych w Europie
+Z racji tego że w zestawie danych brakuje jednoznacznych znaczników czasowych, wykorzystałem liczbę porządkową w kolumne X, aby zachować chronologię badań.
+```{r, echo=FALSE}
+ggplot(df, aes(x=X, y=length)) + geom_line()
+```
+
+## Wykres korelacji zmiennych
+```{r, echo=FALSE}
+
+```
